@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="num"></h1>
+    <script>
+    function myfun(number) {
+       let result = '';
+       const singleDigits = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+       const twodigit = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+       const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+       const last_digit = ['hundred', 'thousand', 'lakh', 'crore', 'arab', 'kharab', 'neel', 'padma', 'shankh', 'maha-shankh', 'jald', 'madh', 'parardh', 'ant', 'madant', 'parmadant', 'ayut', 'niryut', 'prayut', 'arbud', 'nyarbud', 'sankh', 'mahasankh', 'nant', 'vivant', 'madhyant', 'antant', 'shankh', 'mahashankh', 'shankh'];
+       if (number == 0) {
+        return 'zero';
+       } 
+       
+    //    Option 1
+       let c=100
+       for (let len=1;len<=number.length;len++){
+           let num=1000
+           if (number.length>3){
+            if(number.length%2==0){
+                 for (let x=1;x<(number.length/2)-1;x++){
+                   num=num*c
+                 }
+                   let y=(number.length/2)-2
+                    let km=3+y
+                    if(Math.floor(number/num)>0){
+                       result+=myfun(Math.floor(number/num))+last_digit[number.length-km]+" "
+                    }
+                    number=(number%num).toString();
+            }
+            else{
+                for(x=1;x<(Math.floor(number.length/2)-1);x++){
+                    num=num*c
+                }
+                let y=(Math.floor(number.length/2))-2
+                let km=3+y
+                if(Math.floor(number/num)>0){
+                    result+=myfun(Math.floor(number/num))+last_digit[number.length-km-1]+" "
+                }
+             number=(number%num).toString()  
+          }
+         } 
+        }
+
+
+        // Option 2
+        
+    // let num_arr = [
+    //   { divisor: 100000000000000000000000, index: 11 },
+    //   { divisor: 1000000000000000000000, index: 10 },
+    //   { divisor: 10000000000000000000, index: 9 },
+    //   { divisor: 100000000000000000, index: 8 },
+    //   { divisor: 1000000000000000, index: 7 },
+    //   { divisor: 10000000000000, index: 6 },
+    //   { divisor: 100000000000, index: 5 },
+    //   { divisor: 1000000000, index: 4 },
+    //   { divisor: 10000000, index: 3 },
+    //   { divisor: 100000, index: 2 },
+    //   { divisor: 1000, index: 1 }
+    // ];
+
+    // for (var i = 0; i < num_arr.length; i++) {
+    // let  num_obj = num_arr[i];
+    //   if (Math.floor(number / num_obj.divisor) > 0) {
+    //     result += myfun(Math.floor(number / num_obj.divisor)) + last_digit[num_obj.index] + " ";
+    //     number %= num_obj.divisor;
+    //   }
+    // } 
+
+
+
+
+
+    
+        
+        if (Math.floor(number / 100) > 0) {
+            result += myfun(Math.floor(number / 100)) +" "+ last_digit[0]+" ";
+            number %= 100;
+        }
+        if (number >= 10 && number <= 19) {
+            result += twodigit[number - 10]+" ";
+            return result;
+        } else if (number >= 20) {
+            result += tens[Math.floor(number / 10)];
+            if (number % 10 !== 0) {
+                result += '-' + singleDigits[number % 10]+" ";
+            }
+        } else {
+            result += singleDigits[number]+" ";
+        }
+        return result;
+    }
+let userInput=prompt("enter value")
+const result = myfun(userInput);
+document.querySelector("#num").innerHTML=result
+    </script>   
+</body>
+</html>
